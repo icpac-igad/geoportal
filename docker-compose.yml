@@ -40,7 +40,7 @@ services:
       - data-dir-conf
     volumes:
       - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${GEOSERVER_DATA_DIR_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -61,7 +61,7 @@ services:
       - data-dir-conf
     volumes:
       - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${GEOSERVER_DATA_DIR_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -87,7 +87,7 @@ services:
       - data-dir-conf
     volumes:
       - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${GEOSERVER_DATA_DIR_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -139,7 +139,7 @@ services:
         org.geonode.instance.name: geonode
     command: /bin/true
     volumes:
-      - geoserver-data-dir:/geoserver_data/data
+      - ${GEOSERVER_DATA_DIR_VOL}:/geoserver_data/data
 
 volumes:
   statics:
@@ -148,8 +148,6 @@ volumes:
     name: ${COMPOSE_PROJECT_NAME}-nginxconfd
   nginx-certificates:
     name: ${COMPOSE_PROJECT_NAME}-nginxcerts
-  geoserver-data-dir:
-    name: ${COMPOSE_PROJECT_NAME}-gsdatadir
   dbdata:
     name: ${COMPOSE_PROJECT_NAME}-dbdata
   dbbackups:
