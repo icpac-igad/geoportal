@@ -1,0 +1,9 @@
+
+
+{% for app in apps %}
+    {% if app.show_in_geoportal %}
+
+        <div>{{ app.title }}</div>
+
+    {% endif %}
+{% endfor %}
