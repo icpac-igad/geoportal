@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load base_tags %}
 {% load icpac_tags %}
+{% load static %}
 
 
 {% comment %}
@@ -12,26 +13,27 @@ meet your own needs.
 {% block hero %}
 {% if custom_theme.welcome_theme == 'JUMBOTRON_BG' or not slides %}
 <div class="jumbotron" >
-    <div class="container">
+    <div class="container" style="padding-bottom: 3em;">
         {% with jumbotron_welcome_title="ICPAC Geoportal"|template_trans %}
         <h2>{% trans jumbotron_welcome_title %}</h2>
         {% endwith %}
         <p></p>
-        {% with jumbotron_welcome_content=custom_theme.jumbotron_welcome_content|default:"Our corporate web application for creating and sharing geospatial data and maps designed for non-GIS experts."|template_trans %}
+        {% with jumbotron_welcome_content=custom_theme.jumbotron_welcome_content|default:"Explore our data"|template_trans %}
         <p>{% trans jumbotron_welcome_content %}</p>
         {% endwith %}
+
         <div class="big-search">
             <div class="container">
                 <div class="search">
                     <form id="main_search" action="{% url "search" %}" >
                         <span><i class="fa fa-search"></i></span>
                         {% if HAYSTACK_SEARCH %}
-                    <input id="main_search_input" type="text" placeholder="{% trans 'Search' %}" class="form-control" name="q" autocomplete="off">
+                    <input id="main_search_input" type="text" placeholder="{% trans 'Search datasets' %}" class="form-control" name="q" autocomplete="off">
                       <input type="hidden" name="abstract__icontains" id="main_search_abstract_input" placeholder="{% trans 'Search' %}" >
                       <input type="hidden" name="purpose__icontains" id="main_search_purpose_input" placeholder="{% trans 'Search' %}" >
                       <input type="hidden" name="f_method" id="main_filtering_type" value="or" >
                         {% else %}
-                        <input id="main_search_input" type="text" placeholder="{% trans 'Search' %}" class="form-control" autocomplete="off" name="title__icontains">
+                        <input id="main_search_input" type="text" placeholder="{% trans 'Search datasets' %}" class="form-control" autocomplete="off" name="title__icontains">
                       <input type="hidden" name="abstract__icontains" id="main_search_abstract_input">
                       <input type="hidden" name="purpose__icontains" id="main_search_purpose_input">
                       <input type="hidden" name="f_method" id="main_filtering_type" value="or" >
@@ -39,9 +41,15 @@ meet your own needs.
                     </form>
                 </div>
             </div>
+            <a style="color: ghostwhite; text-decoration: underline;" href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">  All Layers <span><i class="fa fa-arrow-right"></i></span></a>
+
         </div>
+        
+
+
     </div>
 </div>
+
 {% else %}
 <div class="geonode-slide-show">
     <div class="jumbotron jumbotron--no_bg">
@@ -112,12 +120,12 @@ meet your own needs.
 
     <div class="container">
         <div class="row" style="text-align: center;display:flex!important;justify-content: center;">
-            <div class="col-md-8" style="display:flex;justify-content: center;align-items:center!important;flex: 0 0 auto;background-image: url('https://droughtwatch.icpac.net/media/images/lonely-tree-in-drought-field-sunse.width-1366.height-768.jpg'); width:80%;height:30vh; background-size: cover;background-position: center;border-radius: 0.7em;background-repeat: no-repeat;">
+            <div class="col-md-8" style="display:flex;justify-content: center;align-items:center!important;flex: 0 0 auto;background-image: url('{% static 'img/data-request.jpg' %}'); width:80%;height:30vh; background-size: cover;background-position: center;border-radius: 0.7em;background-repeat: no-repeat;">
                 <div class="position-absolute top-50 start-50 translate-middle">
-                    <h3  style="color: #f8f9fb;font-weight: 400;">Request for Data?
+                    <h3  style="color: #f8f9fb;font-weight: 400;">Request for Data
                     </h3>
                     <div class="d-md-flex justify-content-md-center">
-                    <a href="https://www.icpac.net/data-center/" target="_blank" class="btn btn-default">Request <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> </a>
+                    <a href="https://www.icpac.net/data-request/" target="_blank" class="btn btn-default data-request">Request <span class="glyphicon glyphicon-arrow-right" style="padding-left:7px" aria-hidden="true"></span> </a>
                   </div>
                   </div>
             </div>

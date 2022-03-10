@@ -77,8 +77,27 @@
           }
 
           .home .big-search .search .fa-search {
-                top: 8px;
+                top: 45px !important;
+                right: 51em !important;
+                left: unset;
             }
+
+          p.ng-binding{
+            margin:11px !important;
+          }
+
+          a.ng-binding{
+            color:#3c763d !important;
+          }
+
+          a.ng-scope{
+            color:#3c763d !important;
+          }
+          
+
+          li.ng-scope a{
+            color:#3c763d !important;
+          }
 
 
           #wrap {
@@ -97,15 +116,19 @@
         .iso-categories h1{
             font-size: 28px;
         }
-
         
-        .home .navbar-inverse , .navbar-inverse {
-          background-color: #171414;
-        }
+        .home .navbar-inverse {
+    	    background-color: #333333 !important;
+	}
 
-.panel-body{
-    padding:0
-}
+        .navbar-inverse {
+            background-color: #333333 !important;
+       	}
+        
+
+        .panel-body{
+            padding:0
+        }
         .navbar-inverse .navbar-nav > li > a {
           color: #fff;
           font-weight: 600;
@@ -128,7 +151,7 @@
         }
 
         .navbar-nav .dropdown-menu {
-          background-color: #171414
+          background-color: #333333
         }
 
         {% if custom_theme.navbar_dropdown_menu_text %}
@@ -143,7 +166,7 @@
         }
 
         .navbar-nav .dropdown-menu .divider {
-          background-color: rgba(199, 199, 199, 0.747);
+          background-color: rgba(199, 199, 199, 0.664);
         }
 
         .navbar-brand {
@@ -157,7 +180,8 @@
         }
 
         .home .jumbotron {
-          background-color: #2c689c
+          background-color: #3c763d !important;
+          padding: 9.5em 0.5em 3.75em !important;
         }
 
         .home .jumbotron h1,
@@ -199,7 +223,7 @@
         .home .big-search {
           background: transparent;
           color: #fff;
-          padding-bottom: 3em;
+          padding-bottom:0;
           padding-top: 1em;
         }
 
@@ -220,7 +244,7 @@
           padding: 1.5em;
         }
         footer a {
-          color: ghostwhite;
+          color: #cdcdcd;
           font-size: 14px;
         }
 
@@ -233,25 +257,29 @@
             background-color: #048947 !important
         }
 
-        .home .big-search .search input {
-            text-indent: 44px;
-        }
-
         .jumbotron .container{
             text-align: center;
+            
         }
         .jumbotron {
-            margin-top: -11px;
+            margin-top: -12px;
             box-shadow: inset 0 0 0 100vw rgb(0 0 0 / 20%)
         }
 
         .home .big-search .search input {
+            text-indent: 44px;
             width: 100%;
-            height: 36px;
+            height: 46px;
             border: 1px solid #333333;
-            border-radius: 5px;
+            border-radius: 7px;
             outline-width: 0;
             font-size: 1.0em;
+        }
+
+        .home .big-search .search {
+            position: unset !important;
+            padding-top: 2em;
+            padding-bottom: 1em;
         }
 
         .home .jumbotron p {
@@ -274,6 +302,42 @@
             box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
         }
 
+
+        .iso-categories .row span {
+            background-color: #3c763d !important;
+        }
+
+        .badge .badge-secondary{
+          background-color: #3c763d !important;
+        }
+
+
+        .btn.data-request {
+            padding: 8px 30 !important;
+            border-radius: 8px !important;
+            font-size: 18px !important;
+        }
+
+        .btn-default.data-request {
+            color: #fff !important;
+            background-color: transparent !important;
+            border-color: #fff !important;
+            border-width: 0.25rem !important;
+        }
+
+        .btn-default:hover.data-request  {
+            color: #333 !important;
+            background-color: #ffffff !important;
+            border-color: transparent !important;
+        }
+
+        footer a:hover {
+            color: #01d305 !important;
+        }
+
+        .home #datasets a .category:hover {
+            color: #3c763d !important;
+        }
 
       </style>
       {% block extra_head %}
@@ -423,9 +487,6 @@
                {% render_nav_menu 'TOPBAR_MENU' %}
             {% endblock my_extra_right_tab %}
 
-            {% if not user.is_authenticated and ACCOUNT_OPEN_SIGNUP and not READ_ONLY_MODE %}
-              <li><a href="{% url "account_signup" %}">{% trans "Register" %}</a></li>
-            {% endif %}
             {% if user.is_authenticated %}
             <li>
               <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
