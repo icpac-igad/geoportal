@@ -10,7 +10,7 @@ services:
         org.geonode.component: db
         org.geonode.instance.name: geonode
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - ${GEONODE_DB_DATA_VOL}:/var/lib/postgresql/data
       - dbbackups:/pg_backups
     env_file:
       - .env
@@ -39,8 +39,8 @@ services:
       - db
       - data-dir-conf
     volumes:
-      - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${STATICS_VOL}:/mnt/volumes/statics
+      - ${GEOSERVER_DATA_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -60,8 +60,8 @@ services:
       - rabbitmq
       - data-dir-conf
     volumes:
-      - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${STATICS_VOL}:/mnt/volumes/statics
+      - ${GEOSERVER_DATA_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -77,6 +77,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_django:latest
     container_name: celery4${COMPOSE_PROJECT_NAME}
     stdin_open: true
+    network_mode: "host"
     labels:
       org.geonode.component: celery
       org.geonode.instance.name: geonode
@@ -86,8 +87,8 @@ services:
       - rabbitmq
       - data-dir-conf
     volumes:
-      - statics:/mnt/volumes/statics
-      - geoserver-data-dir:/geoserver_data/data
+      - ${STATICS_VOL}:/mnt/volumes/statics
+      - ${GEOSERVER_DATA_VOL}:/geoserver_data/data
       - ${BACKUP_RESTORE_VOL}:/backup_restore
       - data:/data
       - tmp:/tmp
@@ -116,7 +117,7 @@ services:
     volumes:
       - nginx-confd:/etc/nginx
       - nginx-certificates:/geonode-certificates
-      - statics:/mnt/volumes/statics
+      - ${STATICS_VOL}:/mnt/volumes/statics
     env_file:
       - .env
 
@@ -129,7 +130,7 @@ services:
      - nginx-certificates:/geonode-certificates/
     env_file:
      - .env
- 
+
   data-dir-conf:
     image: geonode/geoserver_data:2.18.x
     restart: ${RESTART_POLICY}
@@ -139,19 +140,13 @@ services:
         org.geonode.instance.name: geonode
     command: /bin/true
     volumes:
-      - geoserver-data-dir:/geoserver_data/data
+      - ${GEOSERVER_DATA_VOL}:/geoserver_data/data
 
 volumes:
-  statics:
-    name: ${COMPOSE_PROJECT_NAME}-statics
   nginx-confd:
     name: ${COMPOSE_PROJECT_NAME}-nginxconfd
   nginx-certificates:
     name: ${COMPOSE_PROJECT_NAME}-nginxcerts
-  geoserver-data-dir:
-    name: ${COMPOSE_PROJECT_NAME}-gsdatadir
-  dbdata:
-    name: ${COMPOSE_PROJECT_NAME}-dbdata
   dbbackups:
     name: ${COMPOSE_PROJECT_NAME}-dbbackups
   data:
