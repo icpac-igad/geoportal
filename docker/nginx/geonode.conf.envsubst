@@ -38,23 +38,7 @@ location /geoserver {
 
     # Using a variable is a trick to let Nginx start even if upstream host is not up yet
     # (see https://sandro-keil.de/blog/2017/07/24/let-nginx-start-if-upstream-host-is-unavailable-or-down/)
-    set $upstream geoserver:8080;
-
-    proxy_set_header Host $http_host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-
-    proxy_pass http://$upstream;
-}
-
-# Jenkins
-location /jenkins {
-
-    # Using a variable is a trick to let Nginx start even if upstream host is not up yet
-    # (see https://sandro-keil.de/blog/2017/07/24/let-nginx-start-if-upstream-host-is-unavailable-or-down/)
-    set $upstream jenkins:$JENKINS_HTTP_PORT;
-    # set $upstream $HTTP_HOST$HTTPS_HOST:$JENKINS_HTTP_PORT;
+    set $upstream geonode_geoserver:8080;
 
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -113,7 +97,7 @@ location ~ ^/celery-monitor/? {
 location / {
   # Using a variable is a trick to let Nginx start even if upstream host is not up yet
   # (see https://sandro-keil.de/blog/2017/07/24/let-nginx-start-if-upstream-host-is-unavailable-or-down/)
-  set $upstream django:8000;
+  set $upstream geonode_django:8000;
 
   if ($request_method = OPTIONS) {
       add_header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, OPTIONS";
