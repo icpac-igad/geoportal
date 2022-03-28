@@ -56,8 +56,8 @@ services:
       org.geonode.component: django
       org.geonode.instance.name: geonode
     depends_on:
-      - db
-      - rabbitmq
+      - geonode_db
+      - geonode_rabbitmq
       - data-dir-conf
     volumes:
       - ${STATICS_VOL}:/mnt/volumes/statics
@@ -82,9 +82,9 @@ services:
       org.geonode.component: celery
       org.geonode.instance.name: geonode
     depends_on:
-      - django
-      - db
-      - rabbitmq
+      - geonode_django
+      - geonode_db
+      - geonode_rabbitmq
       - data-dir-conf
     volumes:
       - ${STATICS_VOL}:/mnt/volumes/statics
