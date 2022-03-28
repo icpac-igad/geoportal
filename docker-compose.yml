@@ -116,7 +116,7 @@ services:
       # - "443:443"
     volumes:
       - nginx-confd:/etc/nginx
-      - ${SSL_CERTIFICATES_VOL}:/geonode-certificates
+      - ${SSL_CERTIFICATES_VOL}:${CUSTOM_SSL_PATH}
       - ${STATICS_VOL}:/mnt/volumes/statics
     env_file:
       - .env
