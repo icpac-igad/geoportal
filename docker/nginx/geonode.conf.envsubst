@@ -38,7 +38,7 @@ location /geoserver {
 
     # Using a variable is a trick to let Nginx start even if upstream host is not up yet
     # (see https://sandro-keil.de/blog/2017/07/24/let-nginx-start-if-upstream-host-is-unavailable-or-down/)
-    set $upstream geonode_geoserver:8080;
+    set $upstream geoserver:8080;
 
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -97,7 +97,7 @@ location ~ ^/celery-monitor/? {
 location / {
   # Using a variable is a trick to let Nginx start even if upstream host is not up yet
   # (see https://sandro-keil.de/blog/2017/07/24/let-nginx-start-if-upstream-host-is-unavailable-or-down/)
-  set $upstream geonode_django:8000;
+  set $upstream django:8000;
 
   if ($request_method = OPTIONS) {
       add_header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, OPTIONS";

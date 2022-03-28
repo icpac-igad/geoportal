@@ -1,6 +1,6 @@
 version: '2.2'
 services:
-  geonode_db:
+  db:
     image: geonode/postgis:13
     command: postgres -c "max_connections=${POSTGRESQL_MAX_CONNECTIONS}"
     restart: ${RESTART_POLICY}
@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
 
-  geonode_rabbitmq:
+  rabbitmq:
     image: rabbitmq
     restart: ${RESTART_POLICY}
     container_name: rabbitmq4${COMPOSE_PROJECT_NAME}
@@ -26,7 +26,7 @@ services:
         org.geonode.instance.name: geonode
         org.geonode.deployment.name: ${COMPOSE_PROJECT_NAME}
 
-  geonode_geoserver:
+  geoserver:
     image: geonode/geoserver:2.18.x
     build: ./docker/geoserver/
     restart: ${RESTART_POLICY}
@@ -36,7 +36,7 @@ services:
         org.geonode.component: geoserver
         org.geonode.instance.name: geonode
     depends_on:
-      - geonode_db
+      - db
       - data-dir-conf
     volumes:
       - ${STATICS_VOL}:/mnt/volumes/statics
@@ -47,7 +47,7 @@ services:
     env_file:
       - .env
 
-  geonode_django:
+  django:
     restart: ${RESTART_POLICY}
     build: .
     container_name: django4${COMPOSE_PROJECT_NAME}
@@ -56,8 +56,8 @@ services:
       org.geonode.component: django
       org.geonode.instance.name: geonode
     depends_on:
-      - geonode_db
-      - geonode_rabbitmq
+      - db
+      - rabbitmq
       - data-dir-conf
     volumes:
       - ${STATICS_VOL}:/mnt/volumes/statics
@@ -71,7 +71,7 @@ services:
       UWSGI_CMD: uwsgi --ini /usr/src/icpac_geoportal/uwsgi.ini
       IS_CELERY: 'False'
 
-  geonode_celery:
+  celery:
     restart: ${RESTART_POLICY}
     #build: .
     image: ${COMPOSE_PROJECT_NAME}_django:latest
@@ -82,9 +82,9 @@ services:
       org.geonode.component: celery
       org.geonode.instance.name: geonode
     depends_on:
-      - geonode_django
-      - geonode_db
-      - geonode_rabbitmq
+      - django
+      - db
+      - rabbitmq
       - data-dir-conf
     volumes:
       - ${STATICS_VOL}:/mnt/volumes/statics
@@ -98,7 +98,7 @@ services:
       CELERY_CMD: celery-cmd
       IS_CELERY: 'True'
 
-  geonode_nginx:
+  geonode:
     image: geonode/nginx:3.x
     build: ./docker/nginx/
     restart: ${RESTART_POLICY}
