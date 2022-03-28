@@ -3,32 +3,54 @@
 {% load i18n %}
 {% load base_tags %}
 {% load icpac_tags %}
+{% load static %}
+
 
 {% comment %}
 This is where you can override the hero area block. You can simply modify the content below or replace it wholesale to
 meet your own needs.
 {% endcomment %}
-
 {% block hero %}
 {% if custom_theme.welcome_theme == 'JUMBOTRON_BG' or not slides %}
-<div class="jumbotron">
-    <div class="container">
-        {% with jumbotron_welcome_title=custom_theme.jumbotron_welcome_title|default:"Welcome"|template_trans %}
-        <h1>{% trans jumbotron_welcome_title %}</h1>
+<div class="jumbotron" >
+    <div class="container" style="padding-bottom: 3em;">
+        {% with jumbotron_welcome_title="ICPAC Geoportal"|template_trans %}
+        <h2>{% trans jumbotron_welcome_title %}</h2>
         {% endwith %}
         <p></p>
-        {% with jumbotron_welcome_content=custom_theme.jumbotron_welcome_content|default:"GeoNode is an open source platform for sharing geospatial data and maps."|template_trans %}
+        {% with jumbotron_welcome_content=custom_theme.jumbotron_welcome_content|default:"Explore our data"|template_trans %}
         <p>{% trans jumbotron_welcome_content %}</p>
         {% endwith %}
-        {% if not custom_theme.jumbotron_cta_hide %}
-        <p><a class="btn btn-default btn-lg" target="_blank"
-                href="{{custom_theme.jumbotron_cta_link|default:_("https://docs.geonode.org/en/master/usage/index.html")}}"
-                role="button">{{custom_theme.jumbotron_cta_text|default:_("Get Started &raquo;")}}</a></p>
-        {% endif %}
+
+        <div class="big-search">
+            <div class="container">
+                <div class="search">
+                    <form id="main_search" action="{% url "search" %}" >
+                        <span><i class="fa fa-search"></i></span>
+                        {% if HAYSTACK_SEARCH %}
+                    <input id="main_search_input" type="text" placeholder="{% trans 'Search datasets' %}" class="form-control" name="q" autocomplete="off">
+                      <input type="hidden" name="abstract__icontains" id="main_search_abstract_input" placeholder="{% trans 'Search' %}" >
+                      <input type="hidden" name="purpose__icontains" id="main_search_purpose_input" placeholder="{% trans 'Search' %}" >
+                      <input type="hidden" name="f_method" id="main_filtering_type" value="or" >
+                        {% else %}
+                        <input id="main_search_input" type="text" placeholder="{% trans 'Search datasets' %}" class="form-control" autocomplete="off" name="title__icontains">
+                      <input type="hidden" name="abstract__icontains" id="main_search_abstract_input">
+                      <input type="hidden" name="purpose__icontains" id="main_search_purpose_input">
+                      <input type="hidden" name="f_method" id="main_filtering_type" value="or" >
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            <a style="color: ghostwhite; text-decoration: underline;" href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">  All Layers <span><i class="fa fa-arrow-right"></i></span></a>
+
+        </div>
+        
+
+
     </div>
 </div>
-{% else %}
 
+{% else %}
 <div class="geonode-slide-show">
     <div class="jumbotron jumbotron--no_bg">
         <div class="container">
@@ -77,16 +99,58 @@ meet your own needs.
         </div>
     </div>
 </div>
-{% endif %}
 
+
+{% endif %}
 {% endblock hero %}
 
-{% block mainbody %}
+{% block bigsearch %}
+
+{% endblock bigsearch %}
+
 
 {% block datasets %}
-    <div class="container" style="padding: 50px 0;">
-        {% get_icpac_apps %}
+<section id="datasets" style="padding-top:3em; padding-bottom: 5em">
+  {% get_visibile_resources request.user %}
+ 
+  </div>
+</section>
+
+<section class="section" style="padding-top:2em; padding-bottom: 5em; text-align: center;">
+
+    <div class="container">
+        <div class="row" style="text-align: center;display:flex!important;justify-content: center;">
+            <div class="col-md-8" style="display:flex;justify-content: center;align-items:center!important;flex: 0 0 auto;background-image: url('{% static 'img/data-request.jpg' %}'); width:80%;height:30vh; background-size: cover;background-position: center;border-radius: 0.7em;background-repeat: no-repeat;">
+                <div class="position-absolute top-50 start-50 translate-middle">
+                    <h3  style="color: #f8f9fb;font-weight: 400;">Request for Data
+                    </h3>
+                    <div class="d-md-flex justify-content-md-center">
+                    <a href="https://www.icpac.net/data-request/" target="_blank" class="btn btn-default data-request">Request <span class="glyphicon glyphicon-arrow-right" style="padding-left:7px" aria-hidden="true"></span> </a>
+                  </div>
+                  </div>
+            </div>
+        </div>
     </div>
+
+</section>
+
 {% endblock datasets %}
 
-{% endblock mainbody %}
+
+{% block showcase %}
+<section class="section" style="padding-top:2em; padding-bottom: 5em; text-align: center; background-color: #f8f9fb;">
+    <div class="container" style="width:85%;" >
+        <h3>Applications</h3>
+        <div class="row" style="display: flex; justify-content: center;flex-wrap: wrap">
+            {% get_icpac_apps %}
+    
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}
+
+

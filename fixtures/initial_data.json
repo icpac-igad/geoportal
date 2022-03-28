@@ -114,7 +114,7 @@
         "model": "base.topiccategory",
         "fields": {
             "description": "Economic activities, conditions and employment. Examples: production, labour, revenue, commerce, industry, tourism and ecotourism, forestry, fisheries, commercial or subsistence hunting, exploration and exploitation of resources such as minerals, oil and gas.",
-            "gn_description": "Economy",
+            "gn_description": "Socio-economy",
             "is_choice": true,
             "fa_class": "fa-shopping-cart",
             "identifier": "economy"
@@ -125,7 +125,7 @@
         "model": "base.topiccategory",
         "fields": {
             "description": "Information used for appropriate actions for future use of the land. Examples: land use maps, zoning maps, cadastral surveys, land ownership.",
-            "gn_description": "Planning Cadastre",
+            "gn_description": "Disaster Risks",
             "is_choice": true,
             "fa_class": "fa-home",
             "identifier": "planningCadastre"
