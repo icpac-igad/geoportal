@@ -105,18 +105,20 @@ meet your own needs.
         </div>
     </div>
 </div>
+
+
 {% endif %}
 {% endblock hero %}
 
-{% block bigsearch %}{% endblock bigsearch %}
+{% block bigsearch %}
+
+{% endblock bigsearch %}
+
 
 {% block datasets %}
 <section id="datasets" style="padding-top:3em; padding-bottom: 5em">
     {% get_visibile_resources request.user %}
 </section>
-{% endblock datasets %}
-
-{% get_icpac_apps %}
 
 <section class="section" style="padding-top:2em; padding-bottom: 5em; text-align: center;">
 
@@ -139,4 +141,11 @@ meet your own needs.
 
 </section>
 
+{% endblock datasets %}
+{% block showcase %}
+
 {% block extra_script %}{% endblock extra_script %}
+
+{% get_icpac_apps %}
+
+{% endblock %}
