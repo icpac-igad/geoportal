@@ -454,7 +454,7 @@
             {% endif %}
           </li>
           {% endif %}
-          <li>
+          {% comment %} <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %}<i class="fa fa-angle-down fa-lg"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="{% url "profile_browse" %}">{% trans "People" %}</a></li>
@@ -472,7 +472,7 @@
                   <li><a href="{% url "group_create" %}">{% trans "Create Group" %}</a></li>
                 {% endif %}
               </ul>
-          </li>
+          </li> {% endcomment %}
 
           {% block extra_tab %}
 
@@ -603,7 +603,7 @@
             {% endif %}
           </ul>
         </div>
-        <div class="col-md-2">
+        {% comment %} <div class="col-md-2">
           <ul class="list-unstyled">
             <li class="footer-title">{% trans "About" %}</li>
             <li><a href="{% url "profile_browse" %}">{% trans "People" %}</a></li>
@@ -619,7 +619,7 @@
             <li><a href="{% url "group_create" %}">{% trans "Create Group" %}</a></li>
             {% endif %}
           </ul>
-        </div>
+        </div> {% endcomment %}
 
         <div class="col-md-6 text-right">
           {% block contactus %}
