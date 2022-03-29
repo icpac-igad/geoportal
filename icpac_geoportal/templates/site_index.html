@@ -47,7 +47,7 @@ meet your own needs.
             </div>
             <a style="color: ghostwhite; text-decoration: underline;"
                 href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}"> All Layers <span><i
-                        class="fa fa-arrow-right"></i></span></a>
+                        class="fa fa-arrow-right" style="padding-left:5px"></i></span></a>
 
         </div>
 
@@ -111,8 +111,11 @@ meet your own needs.
 {% endblock hero %}
 
 {% block bigsearch %}
-
 {% endblock bigsearch %}
+
+{% block showcase %}
+    {% get_icpac_apps %}
+{% endblock %}
 
 
 {% block datasets %}
@@ -121,7 +124,6 @@ meet your own needs.
 </section>
 
 <section class="section" style="padding-top:2em; padding-bottom: 5em; text-align: center;">
-
     <div class="container">
         <div class="row" style="text-align: center;display:flex!important;justify-content: center;">
             <div class="col-md-8"
@@ -138,14 +140,10 @@ meet your own needs.
             </div>
         </div>
     </div>
-
 </section>
 
 {% endblock datasets %}
-{% block showcase %}
 
-{% block extra_script %}{% endblock extra_script %}
-
-{% get_icpac_apps %}
-
-{% endblock %}
+{% block extra_script %}
+    <script src="{% static "js/lazysizes.min.js" %}"></script>
+{% endblock extra_script %}
