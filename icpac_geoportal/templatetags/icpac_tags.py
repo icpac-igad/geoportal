@@ -20,7 +20,7 @@ def get_icpac_apps():
             apps = r_json.get("items", [])
             cache.set("icpac_apps", apps, 86400) # cache for 24 hours
 
-        except requests.exceptions.HTTPError:
+        except requests.exceptions.RequestException:
             apps = None
 
     return {
